@@ -16,7 +16,7 @@ const Footer = () => {
         <ul className="list-unstyled">
           <li><a href="/faq" className="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">FAQs</a></li>
           <li><a href="/contact" className="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Contact Us</a></li>
-          <li><a href="/terms" className="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Terms and Conditions</a></li>
+          <li><a href="/tos" className="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Terms of Services</a></li>
         </ul>
       </div>
     </div>
@@ -24,7 +24,7 @@ const Footer = () => {
     <hr className="mb-4" />
     <div className="row">
       <div className="col-md-12">
-        <h6>&copy; 2025 SmartTracker. All rights reserved.</h6>
+        <h6 className="text-center">&copy; 2025 SmartTracker. All rights reserved.</h6>
       </div>
     </div>
 

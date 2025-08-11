@@ -1,1 +1,1 @@
-# Budget App (WIP)
+# SmartTracker (Work in Progress)
