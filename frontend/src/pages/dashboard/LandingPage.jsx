@@ -8,14 +8,14 @@ const LandingPage = () => {
     <h1 className='mt-5 fw-bold fs-1 text-center'>Welcome To SmartTracker</h1>
     <div className="mt-5 py-3 container text-center">
 
-    <div class="d-grid gap-2 d-md-block">
-  <button class="btn btn-success me-5 p-5 fs-4" type="button">
+    <div className="d-grid gap-2 d-md-block">
+  <button className="btn btn-success me-5 p-5 fs-4" type="button">
         Already have an account? 
         <br/>
         <a href="/login" className='text-decoration-none text-reset fs-5'>Click here to login</a>
   </button>
 
-  <button class="btn btn-warning me-5 p-5 fs-4" type="button">
+  <button className="btn btn-warning me-5 p-5 fs-4" type="button">
         Don't have an account yet?
         <br/>
         <a href="/signup" className='text-decoration-none text-reset fs-5'>Click here to get started</a>

@@ -72,7 +72,7 @@ const missingInfo = !fName || !lName || !email || !password || !confirmPwd;
                   Create Account
                 </Button>
 
-                <a class="p-1 rounded" href="/login">Already have an account? Click here to log in</a>
+                <a className="p-1 rounded" href="/login">Already have an account? Click here to log in</a>
               </Form>
             </Card.Body>
           </Card>

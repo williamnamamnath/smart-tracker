@@ -32,13 +32,13 @@ const handleLogin = (e) => {
 
                 <Form.Group className="mb-4" controlId="formBasicPassword">
                   <Form.Label>Password</Form.Label>
-                  <Form.Control type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} requireed />
+                  <Form.Control type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 </Form.Group>
 
                 <Button variant="success" type="submit" className="w-100 my-3" disabled={!email || !password}>
                   Sign In
                 </Button>
-                <a class="p-1 rounded" href="/signup">Don't have an account? Click here to sign up</a>
+                <a className="p-1 rounded" href="/signup">Don't have an account? Click here to sign up</a>
               </Form>
             </Card.Body>
           </Card>

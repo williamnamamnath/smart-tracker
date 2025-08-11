@@ -9,6 +9,8 @@ const newUser = async (req, res) => {
 
     const client = new MongoClient(MONGO_URI);
     const db = client.db(dbName);
+    console.log("Connected to MongoDB.");
+
 
     try {
     const { firstName, lastName, phone, email, password, confirmPwd } = req.body;

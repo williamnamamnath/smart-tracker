@@ -9,23 +9,25 @@ import About from './pages/brand/About';
 import FAQ from './pages/brand/FAQ';
 import TOS from './pages/brand/TOS';
 import Contact from './pages/brand/Contact';
-import Home from './pages/dashboard/Home';
+import Dashboard from './pages/dashboard/Dashboard';
 import Income from './pages/dashboard/Income';
 import Expenses from './pages/dashboard/Expenses';
 import LandingPage from './pages/dashboard/LandingPage';
 import Footer from './components/Footer';
 import Navbartitle from './components/NavbarTitle';
+import BackBtn from './components/BackBtn';
 
 function App() {
   return (
     <div>
       <Router>
         <Navbartitle />
+        <BackBtn />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" exact element={<Login />} />
           <Route path="/signup" exact element={<Signup />} />
-          <Route path="/home" exact element={<Home />} />
+          <Route path="/dashboard" exact element={<Dashboard />} />
           <Route path="/faq" exact element={<FAQ />} />
           <Route path="/tos" exact element={<TOS />} />
           <Route path="/contact" exact element={<Contact />} />

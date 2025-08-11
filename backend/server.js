@@ -1,7 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 
-const { newUser, loginUser, getUserInfo, getUsersInfo } = require('./handlers');
+const { newUser, loginUser, getUserInfo, getUsersInfo, newInquiry } = require('./handlers');
 
 const app = express();
 
@@ -25,6 +25,7 @@ app.use('/', express.static(__dirname + '/'));
 
 // Server endpoints
 app.post('/register', newUser);
+app.post('/contact', newInquiry);
 app.post('/login', loginUser);
 app.get('/user/:_id', getUserInfo);
 app.get('/users', getUsersInfo);
