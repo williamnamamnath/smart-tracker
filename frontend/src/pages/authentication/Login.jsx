@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
@@ -11,7 +11,7 @@ const navigate = useNavigate();
 
 const handleLogin = (e) => {
     e.preventDefault();
-    navigate('/home');
+    navigate('/dashboard');
   };
 
   return (

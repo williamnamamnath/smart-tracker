@@ -1,12 +1,8 @@
-// import SidewayNavbar from '../../components/SidewayNavbar';
 
 const Dashboard = () => {
   return (
     <>
     <div className="d-flex" style={{ minHeight: '100vh' }}>
-      <div>
-        {/* <SidewayNavbar /> */}
-      </div>
       <div className="flex-fill">
         <h1 className='fw-bold fs-1 m-5 p-3'>My Tracker</h1>
 

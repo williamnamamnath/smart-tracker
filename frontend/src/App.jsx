@@ -14,14 +14,14 @@ import Income from './pages/dashboard/Income';
 import Expenses from './pages/dashboard/Expenses';
 import LandingPage from './pages/dashboard/LandingPage';
 import Footer from './components/Footer';
-import Navbartitle from './components/NavbarTitle';
+import MainNavbar from './components/MainNavbar';
 // import BackBtn from './components/BackBtn';
 
 function App() {
   return (
-    <div>
+    <div className='pt-5'>
       <Router>
-        <Navbartitle />
+        <MainNavbar />
         {/* <BackBtn /> */}
         <Routes>
           <Route path="/" element={<LandingPage />} />

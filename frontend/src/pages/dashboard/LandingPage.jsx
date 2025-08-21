@@ -27,7 +27,7 @@ const LandingPage = () => {
 
 <div className="mt-5 py-3 container">
     <h2 className='m-4'>Why Use SmartTracker?</h2>
-    <div className="row text-center">
+    <div className="row text-center py-4">
         <div className="col">
         Track your income and expenses, all in one location.
         </div>
@@ -40,7 +40,7 @@ const LandingPage = () => {
     </div>
 </div>
 
-<div className="mt-5 py-3 container">
+<div className="my-5 py-3 container">
     <div className="row text-center">
         <div className="col">
         Obtain summaries of revenue(s) and expenditure(s) over a specific time period.

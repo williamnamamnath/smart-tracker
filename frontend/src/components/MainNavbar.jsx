@@ -1,0 +1,89 @@
+import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
+import { NavLink, useNavigate } from "react-router-dom";
+import { FaUserCircle } from "react-icons/fa";
+import { useState } from "react";
+
+const MainNavbar = () => {
+    // Use useState to manage login state
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const navigate = useNavigate();
+
+    // Example logout handler
+    const handleLogout = () => {
+        setIsLoggedIn(false);
+        navigate('/');
+        // Add your logout logic here
+    };
+
+    return (
+        <>
+        <Navbar bg="light" expand="lg" fixed="top" className="shadow-sm">
+      <Container fluid>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            {isLoggedIn && (
+              <>
+                <Nav.Link
+                  as={NavLink}
+                  to="/dashboard"
+                >
+                  Dashboard
+                </Nav.Link>
+                <Nav.Link
+                  as={NavLink}
+                  to="/income"
+                >
+                  Income
+                </Nav.Link>
+                <Nav.Link
+                  as={NavLink}
+                  to="/expenses"
+                >
+                  Expenses
+                </Nav.Link>
+              </>
+            )}
+          </Nav>
+        </Navbar.Collapse>
+
+        <Navbar.Brand
+          href="/"
+          className="mx-auto position-absolute start-50 translate-middle-x"
+        >
+          SmartTracker
+        </Navbar.Brand>
+
+        <Nav>
+          <NavDropdown
+            align="end"
+            title={<FaUserCircle size={24} />}
+            id="user-dropdown"
+          >
+            {!isLoggedIn ? (
+              <NavDropdown.Item as={NavLink} to="/login">
+                Log In
+              </NavDropdown.Item>
+            ) : (
+              <>
+                <NavDropdown.Item as={NavLink} to="/settings">
+                  Settings
+                </NavDropdown.Item>
+                <NavDropdown.Item as={NavLink} to="/account">
+                  Account Information
+                </NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item as="button" onClick={handleLogout}>
+                  Logout
+                </NavDropdown.Item>
+              </>
+            )}
+          </NavDropdown>
+        </Nav>
+      </Container>
+    </Navbar>
+        </>
+    );
+};
+
+export default MainNavbar;

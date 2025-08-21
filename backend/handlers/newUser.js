@@ -13,8 +13,8 @@ const newUser = async (req, res) => {
 
 
     try {
-    const { firstName, lastName, phone, email, password, confirmPwd } = req.body;
-    const requiredInfo = ["firstName", "lastName", "phone", "email", "password", "confirmPwd"];
+    const { firstName, lastName, email, password, confirmPwd } = req.body;
+    const requiredInfo = ["firstName", "lastName", "email", "password", "confirmPwd"];
     const missingFields = requiredInfo.filter(field => req.body[field] === undefined || req.body[field] === '');
 
     if (missingFields.length > 0) {
@@ -46,7 +46,6 @@ const newUser = async (req, res) => {
             _id: uuidv4(),
             firstName,
             lastName,
-            phone,
             email,
             password: hashedPassword
         }
