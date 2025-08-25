@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
@@ -6,13 +6,16 @@ import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
 
+  useEffect(() => {
+        document.title = "Register"
+    }, []);
+
 const [fName, setFName] = useState("");
 const [lName, setLName] = useState("");
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
 const [confirmPwd, setConfirmPwd] = useState("");
 const [error, setError] = useState("");
-const [profilePicture, setProfilePicture] = useState(null);
 const navigate = useNavigate();
 
 const handleSignup = (e) => {
@@ -23,7 +26,7 @@ const handleSignup = (e) => {
         return;
     }
 
-    navigate('/home');
+    navigate('/dashboard');
 };
 
 const missingInfo = !fName || !lName || !email || !password || !confirmPwd;

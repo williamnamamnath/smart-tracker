@@ -15,14 +15,12 @@ import Expenses from './pages/dashboard/Expenses';
 import LandingPage from './pages/dashboard/LandingPage';
 import Footer from './components/Footer';
 import MainNavbar from './components/MainNavbar';
-// import BackBtn from './components/BackBtn';
 
 function App() {
   return (
     <div className='pt-5'>
       <Router>
         <MainNavbar />
-        {/* <BackBtn /> */}
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" exact element={<Login />} />

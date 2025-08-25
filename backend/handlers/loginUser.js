@@ -6,22 +6,8 @@ const dbName = 'budgetApp';
 
 const loginUser = async (req, res) => {
 
-    const client = new MongoClient(MONGO_URI);
-    const db = client.db(dbName);
-
-    try {
-    await client.connect();
-    console.log('Connected to MongoDB.');
-    
-    const existingUser = await db.collection('users').findOne({ email });
-    if (!existingUser) {
-        return res.status(404).json({
-            status: 404,
-            message: "User not found, please verify your email.",
-        }); 
-    }
-
     const { email, password } = req.body;
+    const client = new MongoClient(MONGO_URI);
 
     if (email === undefined || email === "" || email === null) {
         return res.status(404).json({
@@ -37,23 +23,36 @@ const loginUser = async (req, res) => {
         })
     }
 
+    try {
+    await client.connect();
+    const db = client.db(dbName);
+    console.log('Connected to MongoDB.');
+    
+    const existingUser = await db.collection('users').findOne({ email });
+    if (!existingUser) {
+        return res.status(404).json({
+            status: 404,
+            message: "User not found, please verify your email.",
+        }); 
+    }
+
+
     const validPassword = await bcrypt.compare(password, existingUser.password);
 
         if (!validPassword) {
-            return res.status(401).json({
-                status: 401,
+            return res.status(404).json({
+                status: 404,
                 message: "Incorrect password",
             });
         }
 
-        const { password: hashedPassword, ...userData } = foundUser;
+        const { password: hashedPassword, ...userData } = existingUser;
 
         res.status(200).json({
             status: 200,
             message: "Login successful",
             user: userData
         });
-        console.log("This is userData: ", userData);
 
     } catch (error) {
         console.log(error);

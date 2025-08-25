@@ -1,19 +1,13 @@
 import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
-import { useState } from "react";
+import { useContext } from "react";
+
+import { UserAuthContext } from "../pages/authentication/LoginInfo";
 
 const MainNavbar = () => {
-    // Use useState to manage login state
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const navigate = useNavigate();
 
-    // Example logout handler
-    const handleLogout = () => {
-        setIsLoggedIn(false);
-        navigate('/');
-        // Add your logout logic here
-    };
+    const { signedOut, loginConfirmed } = useContext(UserAuthContext);
 
     return (
         <>
@@ -22,7 +16,7 @@ const MainNavbar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            {isLoggedIn && (
+            {loginConfirmed && (
               <>
                 <Nav.Link
                   as={NavLink}
@@ -60,7 +54,7 @@ const MainNavbar = () => {
             title={<FaUserCircle size={24} />}
             id="user-dropdown"
           >
-            {!isLoggedIn ? (
+            {!loginConfirmed ? (
               <NavDropdown.Item as={NavLink} to="/login">
                 Log In
               </NavDropdown.Item>
@@ -73,7 +67,7 @@ const MainNavbar = () => {
                   Account Information
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item as="button" onClick={handleLogout}>
+                <NavDropdown.Item as="button" onClick={signedOut}>
                   Logout
                 </NavDropdown.Item>
               </>
