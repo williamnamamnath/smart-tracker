@@ -10,7 +10,9 @@ import FAQ from './pages/brand/FAQ';
 import TOS from './pages/brand/TOS';
 import Contact from './pages/brand/Contact';
 import Dashboard from './pages/dashboard/Dashboard';
+import IncomeForm from './pages/dashboard/incomeForm';
 import Income from './pages/dashboard/Income';
+import ExpenseForm from './pages/dashboard/expenseForm';
 import Expenses from './pages/dashboard/Expenses';
 import LandingPage from './pages/dashboard/LandingPage';
 import Footer from './components/Footer';
@@ -29,7 +31,9 @@ function App() {
           <Route path="/faq" exact element={<FAQ />} />
           <Route path="/tos" exact element={<TOS />} />
           <Route path="/contact" exact element={<Contact />} />
+          <Route path="/new/income" exact element={<IncomeForm />} />
           <Route path="/income" exact element={<Income />} />
+          <Route path="/new/expenses" exact element={<ExpenseForm />} />
           <Route path="/expenses" exact element={<Expenses />} />
           <Route path="/about" exact element={<About />} />
         </Routes>

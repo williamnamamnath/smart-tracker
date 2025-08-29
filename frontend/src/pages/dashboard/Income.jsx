@@ -1,14 +1,21 @@
-// import SidewayNavbar from '../../components/SidewayNavbar';
+import { FaPlus } from "react-icons/fa";
 
 const Income = () => {
+
   return (
     <>
     <div className="d-flex" style={{ minHeight: '100vh' }}>
       <div>
-        {/* <SidewayNavbar /> */}
       </div>
       <div className="flex-fill">
         <h1 className='fw-bold fs-1 m-5 p-3'>My Revenue</h1>
+
+        <div className="d-flex justify-content-start m-5 p-3">
+            <button type="button" className="btn btn-primary" href="/new/income">
+              <FaPlus className="me-2" />
+              Add New Income
+            </button>
+          </div>
 
         <div className="d-flex gap-4 m-5 p-3">
           <div className="card flex-fill text-center">
