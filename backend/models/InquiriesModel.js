@@ -21,7 +21,7 @@ const InquirySchema = new mongoose.Schema({
         unique: true,
         lowercase: true
     },
-    comments: {
+    description: {
         type: String,
         required: true,
         trim: true,

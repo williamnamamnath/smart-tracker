@@ -35,17 +35,9 @@ export const GlobalProvider = ({children}) => {
         getIncomes()
     }
 
-    const totalIncome = () => {
-        let totalIncome = 0;
-        incomes.forEach((income) =>{
-            totalIncome = totalIncome + income.amount
-        })
-
-        return totalIncome;
-    }
-
-
-
+    
+    
+    
     //Calculating expenses
     const addExpense = async (expense) => {
         try {
@@ -56,19 +48,73 @@ export const GlobalProvider = ({children}) => {
             setError(err.response?.data?.message || "Failed to add expense")
         }
     }
-
+    
     const getExpenses = async () => {
         const response = await axios.get(`${BASE_URL}get-expenses`)
         setExpenses(response.data)
         console.log(response.data)
     }
-
+    
     const deleteExpense = async (id) => {
         const res  = await axios.delete(`${BASE_URL}delete-expense/${id}`)
         getExpenses()
     }
     
+    
+    //User authentication
+    const createUser = async (userData) => {
+        try {
+            await axios.post(`${BASE_URL}users`, userData);
+            setError(null);
+        } catch (err) {
+            setError(err.response?.data?.message || "Failed to create user");
+        }
+    };
 
+    const loginUser = async (credentials) => {
+        try {
+            const response = await axios.post(`${BASE_URL}login`, credentials);
+            setError(null);
+            return response.data;
+        } catch (err) {
+            setError(err.response?.data?.message || "Failed to login");
+            return null;
+        }
+    };
+    
+    const getUsers = async () => {
+        try {
+            const response = await axios.get(`${BASE_URL}users`);
+            setError(null);
+            return response.data;
+        } catch (err) {
+            setError(err.response?.data?.message || "Failed to get users");
+            return [];
+        }
+    };
+    
+    
+    //Inquiries
+    const createInquiry = async (inquiryData) => {
+        try {
+            await axios.post(`${BASE_URL}inquiries`, inquiryData);
+            setError(null);
+        } catch (err) {
+            setError(err.response?.data?.message || "Failed to create inquiry");
+        }
+    };
+    
+    
+    //Total calculations
+    const totalIncome = () => {
+        let totalIncome = 0;
+        incomes.forEach((income) =>{
+            totalIncome = totalIncome + income.amount
+        })
+
+        return totalIncome;
+    }
+    
     const totalExpenses = () => {
         let totalIncome = 0;
         expenses.forEach((income) =>{
@@ -104,6 +150,10 @@ export const GlobalProvider = ({children}) => {
             addExpense,
             getExpenses,
             deleteExpense,
+            createUser,
+            loginUser,
+            getUsers,
+            createInquiry,
             totalExpenses,
             totalBalance,
             transactionHistory,

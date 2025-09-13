@@ -1,7 +1,7 @@
 const { addExpense, getExpenses, deleteExpense } = require('../handlers/manipulateExpenses');
 const { addIncome, getIncomes, deleteIncome } = require('../handlers/manipulateIncome');
 const { createUser, getUsers, loginUser } = require('../handlers/manipulateUsers');
-const { createInquiry } = require('../handlers/manipulateInquiries');
+const { createInquiry, getInquiries } = require('../handlers/manipulateInquiries');
 
 const router = require('express').Router();
 
@@ -22,5 +22,6 @@ router.post('/add-income', addIncome)
 
 //Routes for inquiries
 .post('/create-inquiry', createInquiry)
+.get('/get-inquiries', getInquiries)
 
 module.exports = router;

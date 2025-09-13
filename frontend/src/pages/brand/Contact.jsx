@@ -1,27 +1,35 @@
 import { useState } from "react";
+import { useGlobalContext } from "../authentication/globalContext";
 
 const Contact = () => {
 
-    const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    comments: ""
-  });
+    const { createInquiry, error, setError } = useGlobalContext();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
+const [inputState, setInputState] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        description: ''
     });
-  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form submitted:", formData);
-    alert("Form submitted successfully!");
-  };
+    const { firstName, lastName, email, description } = inputState;
+
+    const handleChange = name => e => {
+        setInputState({...inputState, [name]: e.target.value});
+        setError('');
+    }
+
+  const handleSubmit = e => {
+        e.preventDefault();
+        createInquiry(inputState);
+
+        setInputState({
+            firstName: '',
+            lastName: '',
+            email: '',
+            description: ''
+        })
+    }
 
     return (
         <>
@@ -46,8 +54,8 @@ const Contact = () => {
                         className="form-control"
                         id="fullName"
                         name="fullName"
-                        value={formData.firstName}
-                        onChange={handleChange}
+                        value={firstName}
+                        onChange={handleChange('firstName')}
                         placeholder="Enter your first name"
                         required
                     />
@@ -62,8 +70,8 @@ const Contact = () => {
                         className="form-control"
                         id="fullName"
                         name="fullName"
-                        value={formData.lastName}
-                        onChange={handleChange}
+                        value={lastName}
+                        onChange={handleChange('lastName')}
                         placeholder="Enter your last name"
                         required
                     />
@@ -78,8 +86,8 @@ const Contact = () => {
                         className="form-control"
                         id="email"
                         name="email"
-                        value={formData.email}
-                        onChange={handleChange}
+                        value={email}
+                        onChange={handleChange('email')}
                         placeholder="Enter your email"
                         required
                     />
@@ -94,9 +102,9 @@ const Contact = () => {
                         id="comments"
                         name="comments"
                         rows="4"
-                        value={formData.comments}
-                        onChange={handleChange}
-                        placeholder="Write your comments or question(s) here..."
+                        value={description}
+                        onChange={handleChange('description')}
+                        placeholder="Write your comment(s) or question(s) here..."
                         required
                     ></textarea>
                     </div>
@@ -104,6 +112,11 @@ const Contact = () => {
                     <button type="submit" className="btn btn-primary" disabled={!formData.fullName || !formData.email || !formData.comments}>
                     Submit
                     </button>
+                    {error && (
+                            <div className="text-danger mt-3 text-center">
+                                {error}
+                            </div>
+                        )}
                 </form>
                 </div>
 

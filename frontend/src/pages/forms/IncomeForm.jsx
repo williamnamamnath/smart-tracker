@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useGlobalContext } from '../authentication/globalContext';
+import { useNavigate } from 'react-router-dom';
 
 import { Container, Card, Form, Button } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
@@ -7,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const IncomeForm = () => {
 
+const navigate = useNavigate();
 const { addIncome, error, setError } = useGlobalContext();
 
 const [inputState, setInputState] = useState({
@@ -43,6 +45,8 @@ const handleInput = name => e => {
             category: '',
             description: '',
         })
+        window.alert(`"${inputState.title}" added to list of income successfully!`);
+        navigate('/income');
     };
     
 
@@ -102,7 +106,7 @@ const handleInput = name => e => {
                         </Form.Group>
 
                         <Form.Group className="mb-4" controlId="formDateTime">
-                            <Form.Label>Date & Time</Form.Label>
+                            <Form.Label>Date (yyyy-MM-dd)</Form.Label>
                             <br/>
                             <DatePicker
                                 id='date'
