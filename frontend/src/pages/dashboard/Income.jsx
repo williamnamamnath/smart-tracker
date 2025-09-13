@@ -1,6 +1,9 @@
 import { FaPlus } from "react-icons/fa";
+import { useGlobalContext } from "../authentication/globalContext";
 
 const Income = () => {
+
+  const { addIncome } = useGlobalContext();
 
   return (
     <>

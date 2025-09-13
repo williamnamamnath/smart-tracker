@@ -1,36 +1,25 @@
 const express = require('express');
-const morgan = require('morgan');
-
-const { newUser, loginUser, getUserInfo, getUsersInfo, newInquiry, createExpense, createIncome } = require('./handlers');
-
+const cors = require('cors');
+const { db } = require('./db/db');
+const {readdirSync} = require('fs');
 const app = express();
 
-app.use(function (req, res, next) {
-    res.header(
-      'Access-Control-Allow-Methods',
-      'OPTIONS, HEAD, GET, PUT, POST, DELETE'
-    );
-    res.header(
-      'Access-Control-Allow-Headers',
-      'Origin, X-Requested-With, Content-Type, Accept'
-    );
-    next();
-  })
+require('dotenv').config();
 
-app.use(morgan('tiny'));
+const PORT = process.env.PORT;
+
+//middlewares
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use('/', express.static(__dirname + '/'));
+app.use(cors());
 
+//routes
+readdirSync('./routes').map((route) => app.use('/api/v1', require('./routes/' + route)));
 
-// Server endpoints
-app.post('/register', newUser);
-app.post('/contact', newInquiry);
-app.post('/new/income', createIncome);
-app.post('/new/expenses', createExpense);
-app.post('/login', loginUser);
-app.get('/user/:_id', getUserInfo);
-app.get('/users', getUsersInfo);
+const server = () => {
+    db()
+    app.listen(PORT, () => {
+        console.log(`Listening on port ${PORT}`)
+    })
+};
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+server();

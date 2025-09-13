@@ -1,13 +1,8 @@
 import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
-import { useContext } from "react";
-
-import { UserAuthContext } from "../pages/authentication/LoginInfo";
 
 const MainNavbar = () => {
-
-    const { signedOut, loginConfirmed } = useContext(UserAuthContext);
 
     return (
         <>
@@ -16,7 +11,7 @@ const MainNavbar = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            {loginConfirmed && (
+            {loginConfirmed ? (
               <>
                 <Nav.Link
                   as={NavLink}
@@ -35,6 +30,27 @@ const MainNavbar = () => {
                   to="/expenses"
                 >
                   Expenses
+                </Nav.Link>
+              </>
+            ) : (
+              <>
+                <Nav.Link
+                  as={NavLink}
+                  to="/faq"
+                >
+                  FAQs
+                </Nav.Link>
+                <Nav.Link
+                  as={NavLink}
+                  to="/contact"
+                >
+                  Contact Us
+                </Nav.Link>
+                <Nav.Link
+                  as={NavLink}
+                  to="/tos"
+                >
+                  Terms of Services
                 </Nav.Link>
               </>
             )}

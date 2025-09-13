@@ -1,13 +1,9 @@
-import { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { UserAuthContext } from "./LoginInfo";
+import { useState, useEffect } from 'react';
 
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 
 const Login = () => {
-  
-  const { loggedIn } = useContext(UserAuthContext);
-  const navigate = useNavigate();
+
   
   useEffect(() => {
         document.title = "Login"
@@ -36,32 +32,6 @@ const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoggingIn(true)
 
-    try {
-            const response = await fetch("/login", {
-                method: "POST",
-                headers: {
-                    "content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email,
-                    password
-                }),
-            });
-
-            if (response.ok) {
-                const userInfo = await response.json();
-                await loggedIn(userInfo); 
-                window.localStorage.setItem("loginConfirmed", true);
-                navigate("/dashboard");
-            } else {
-                const errorTriggered = await response.text();
-                const errorMsg = JSON.parse(errorTriggered).message;
-                setError(errorMsg);
-              };
-
-        } catch (error) {
-            setError(error.message);
-        }
   };
 
   return (

@@ -1,13 +1,13 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
-import UserAuthProvider from './pages/authentication/LoginInfo.jsx'
+import { GlobalProvider } from './pages/authentication/globalContext.jsx'
 import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <UserAuthProvider>
+    <GlobalProvider>
       <App />
-    </UserAuthProvider>
+    </GlobalProvider>
   </StrictMode>,
 )
