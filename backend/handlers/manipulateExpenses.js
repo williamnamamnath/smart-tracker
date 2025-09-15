@@ -53,3 +53,36 @@ exports.deleteExpense = async (req, res) =>{
             res.status(500).json({message: 'Server error'})
         })
 }
+
+
+//Updating an income 
+exports.updateExpense = async (req, res) => {
+    const { id } = req.params
+    const { title, amount, category, description, date } = req.body
+
+    try {
+        if (!title || !amount || !category || !description || !date) {
+            return res.status(400).json({ message: 'All fields are required!' })
+        }
+        if (typeof amount !== 'number') {
+            return res.status(400).json({ message: 'Please enter a valid number for amount' })
+        }
+
+        const updated = await ExpensesSchema.findByIdAndUpdate(
+            id,
+            { title, amount, category, description, date },
+            { new: true, runValidators: true }
+        )
+
+        if (!updated) {
+            return res.status(404).json({ message: 'Transaction not found' })
+        }
+
+        res.status(200).json({
+            message: 'Transaction updated successfully',
+            transaction: updated
+        })
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message })
+    }
+}
