@@ -35,7 +35,16 @@ export const GlobalProvider = ({children}) => {
         getIncomes()
     }
 
-    
+    const updateIncome = async (id, newInfo) => {
+        try {
+            await axios.put(`${BASE_URL}update-income/${id}`, newInfo);
+            await getIncomes();
+            setError(null);
+        } catch (err) {
+            setError(err.response?.data?.message);
+        }
+    }
+
     
     
     //Calculating expenses
@@ -58,6 +67,16 @@ export const GlobalProvider = ({children}) => {
     const deleteExpense = async (id) => {
         const res  = await axios.delete(`${BASE_URL}delete-expense/${id}`)
         getExpenses()
+    }
+
+    const updateExpense = async (id, newInfo) => {
+        try {
+            await axios.put(`${BASE_URL}update-expense/${id}`, newInfo);
+            await getExpenses();
+            setError(null);
+        } catch (err) {
+            setError(err.response?.data?.message);
+        }
     }
     
     
@@ -157,6 +176,8 @@ export const GlobalProvider = ({children}) => {
             totalExpenses,
             totalBalance,
             transactionHistory,
+            updateIncome,
+            updateExpense,
             error,
             setError
         }}>

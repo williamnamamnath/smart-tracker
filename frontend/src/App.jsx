@@ -16,7 +16,7 @@ import ExpenseForm from './pages/forms/ExpenseForm';
 import Expenses from './pages/dashboard/Expenses';
 import LandingPage from './pages/dashboard/LandingPage';
 import Footer from './components/Footer';
-// import MainNavbar from './components/MainNavbar';
+import MainNavbar from './components/MainNavbar';
 import { useGlobalContext } from './pages/authentication/globalContext';
 
 function App() {
@@ -27,7 +27,7 @@ const context = useGlobalContext
   return (
     <div className='pt-5'>
       <Router>
-        {/* <MainNavbar /> */}
+        <MainNavbar />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" exact element={<Login />} />

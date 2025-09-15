@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useGlobalContext } from '../authentication/globalContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,6 +8,10 @@ import "react-datepicker/dist/react-datepicker.css";
 
 
 const ExpenseForm = () => {
+
+        useEffect(() => {
+      document.title = 'Add a New Expense';
+    }, []);
     
     const navigate = useNavigate();
     const { addExpense, error, setError } = useGlobalContext();
