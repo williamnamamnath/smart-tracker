@@ -7,6 +7,7 @@ exports.createInquiry = async (req, res) => {
     const {firstName, lastName, email, description }  = req.body
 
     const inquiry = InquirySchema({
+        user: req.user.id,
         firstName,
         lastName,
         email,
