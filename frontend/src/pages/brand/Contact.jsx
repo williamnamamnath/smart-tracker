@@ -1,9 +1,6 @@
 import { useState } from "react";
-import { useGlobalContext } from "../authentication/globalContext";
 
 const Contact = () => {
-
-    const { createInquiry, error, setError } = useGlobalContext();
 
 const [inputState, setInputState] = useState({
         firstName: '',
@@ -21,7 +18,6 @@ const [inputState, setInputState] = useState({
 
   const handleSubmit = e => {
         e.preventDefault();
-        createInquiry(inputState);
 
         setInputState({
             firstName: '',

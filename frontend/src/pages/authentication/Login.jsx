@@ -1,76 +1,48 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import api, { setAuthToken } from '../../api/api';
 
-import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
+const Login = ({ setUser }) => {
+  const [form, setForm] = useState({ email: '', password: '' });
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-const Login = () => {
-
-  
-  useEffect(() => {
-        document.title = "Login"
-    }, []);
-
-
-const [email, setEmail] = useState("");
-const [password, setPassword] = useState("");
-const [error, setError] = useState("");
-const [isLoggingIn, setIsLoggingIn] = useState(false);
-
-
-const loginEmail = (e) => {
-    setEmail(e.target.value);
-}
-
-const loginPassword = (e) => {
-    setPassword(e.target.value);
-}
-
-const missingInput = () => {
-  return (!email || !password) && !isLoggingIn
-}
-
-const handleLogin = async (e) => {
+  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
+  const submit = async e => {
     e.preventDefault();
-    setIsLoggingIn(true)
-
+    try {
+      const res = await api.post('/auth/login', form);
+      const { token, user } = res.data;
+      localStorage.setItem('token', token);
+      setAuthToken(token);
+      setUser(user);
+      navigate('/');
+    } catch (err) {
+      setError(err.message);
+    }
   };
 
   return (
-<Container fluid className="min-vh-100 d-flex justify-content-center align-items-center">
-      <Row>
-        <Col>
-          <Card className="p-4 shadow-lg">
-            <Card.Body>
-              
-              <Card.Title className="my-3 fs-1 text-center">Login</Card.Title>
-
-              <p className='my-5 fs-5 fw-bold text-center'>Log back in to continue where you left off.</p>
-
-              <Form onSubmit={handleLogin}>
-                <Form.Group className="mb-4" controlId="formBasicEmail">
-                  <Form.Label>Email address</Form.Label>
-                  <Form.Control type="email" placeholder="Enter email" value={email} onChange={loginEmail} required />
-                </Form.Group>
-
-                <Form.Group className="mb-4" controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control type="password" placeholder="Password" value={password} onChange={loginPassword} required />
-                </Form.Group>
-
-                <Button variant="success" type="submit" className="w-100 my-3" disabled={missingInput()}>
-                  {isLoggingIn ? "Please wait..." : "Login"}
-                </Button>
-
-                <a className="p-1 rounded" href="/signup">Don't have an account? Click here to sign up</a>
-                <br/>
-
-                {error && <p style={{color:"red"}}>{error}</p>}
-
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+    <>
+    <div className="row justify-content-center">
+      <div className="col-md-6">
+        <h3>Login</h3>
+        {error && <div className="alert alert-danger">{error}</div>}
+        <form onSubmit={submit}>
+          <div className="mb-3">
+            <label>Email</label>
+            <input name="email" value={form.email} onChange={handleChange} className="form-control" />
+          </div>
+          <div className="mb-3">
+            <label>Password</label>
+            <input type="password" name="password" value={form.password} onChange={handleChange} className="form-control" />
+          </div>
+          <button className="btn btn-primary">Login</button>
+          <Link className="btn btn-link" to="/signup">Signup</Link>
+        </form>
+      </div>
+    </div>
+    </>
   );
 };
 

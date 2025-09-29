@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from "react";
 import "./../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -10,37 +10,40 @@ import FAQ from './pages/brand/FAQ';
 import TOS from './pages/brand/TOS';
 import Contact from './pages/brand/Contact';
 import Dashboard from './pages/dashboard/Dashboard';
-import IncomeForm from './pages/forms/IncomeForm';
-import Income from './pages/dashboard/Income';
-import ExpenseForm from './pages/forms/ExpenseForm';
-import Expenses from './pages/dashboard/Expenses';
 import LandingPage from './pages/dashboard/LandingPage';
+import AuthenticatedPathway from "./components/AuthenticatedPathway";
 import Footer from './components/Footer';
-import MainNavbar from './components/MainNavbar';
-import { useGlobalContext } from './pages/authentication/globalContext';
+import Navbar from './components/Navbar';
+import api, { setAuthToken } from './api/api';
 
 function App() {
 
-const context = useGlobalContext
-
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setAuthToken(token);
+      api.get('/auth/me').then(res => setUser(res.data)).catch(() => {
+        localStorage.removeItem('token');
+        setUser(null);
+        setAuthToken(null);
+      });
+    }
+  }, []);
 
   return (
     <div className='pt-5'>
       <Router>
-        <MainNavbar />
+        <Navbar user={user} setUser={setUser} />
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/login" exact element={<Login />} />
-          <Route path="/signup" exact element={<Signup />} />
-          <Route path="/dashboard" exact element={<Dashboard />} />
-          <Route path="/faq" exact element={<FAQ />} />
-          <Route path="/tos" exact element={<TOS />} />
-          <Route path="/contact" exact element={<Contact />} />
-          <Route path="/new/income" exact element={<IncomeForm />} />
-          <Route path="/income" exact element={<Income />} />
-          <Route path="/new/expenses" exact element={<ExpenseForm />} />
-          <Route path="/expenses" exact element={<Expenses />} />
-          <Route path="/about" exact element={<About />} />
+          <Route path="/login" element={<Login setUser={setUser} />} />
+          <Route path="/signup" element={<Signup setUser={setUser} />} />
+          <Route path="/dashboard" element={<AuthenticatedPathway user={user}><Dashboard user={user} /></AuthenticatedPathway>} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/tos" element={<TOS />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/about" element={<About />} />
         </Routes>
         <Footer />
       </Router>

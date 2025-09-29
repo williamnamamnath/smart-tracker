@@ -1,87 +1,52 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import api, { setAuthToken } from '../../api/api';
+import { useNavigate, Link } from 'react-router-dom';
 
-import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-// import ProfilePicture from '../../components/inputs/ProfilePicture';
+const Signup = ({ setUser }) => {
+  const [form, setForm] = useState({ name: '', email: '', password: '' });
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-const Signup = () => {
-
-  useEffect(() => {
-        document.title = "Register"
-    }, []);
-
-const [fName, setFName] = useState("");
-const [lName, setLName] = useState("");
-const [email, setEmail] = useState("");
-const [password, setPassword] = useState("");
-const [confirmPwd, setConfirmPwd] = useState("");
-const [error, setError] = useState("");
-const navigate = useNavigate();
-
-const handleSignup = (e) => {
+  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
+  const submit = async e => {
     e.preventDefault();
-    
-    if (password !== confirmPwd) {
-        setError("The passwords do not match, please try again.");
-        return;
+    try {
+      const res = await api.post('/auth/register', form);
+      const { token, user } = res.data;
+      localStorage.setItem('token', token);
+      setAuthToken(token);
+      setUser(user);
+      navigate('/');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Signup failed');
     }
-
-    navigate('/dashboard');
-};
-
-const missingInfo = !fName || !lName || !email || !password || !confirmPwd;
+  };
 
   return (
-    <Container fluid className="my-3 min-vh-100 d-flex justify-content-center align-items-center">
-      <Row>
-        <Col>
-          <Card className="p-4 shadow-lg">
-            <Card.Body>
-              <Card.Title className="my-3 fs-1 text-center">Sign Up</Card.Title>
-
-              <p className='my-5 fs-5 fw-bold text-center'>Create an account to start saving effectively.</p>
-
-              {/* <ProfilePicture image={profilePicture} setImage={setProfilePicture} /> */}
-
-              {error && <p className="my-5 fw-bold alert alert-danger text-center">{error}</p>}
-
-              <Form onSubmit={handleSignup}>
-                <Form.Group className="mb-4" controlId="formFirstName">
-                  <Form.Label>First Name</Form.Label>
-                  <Form.Control type="text" placeholder="First name" value={fName} onChange={(e) => setFName(e.target.value)} />
-                </Form.Group>
-
-                <Form.Group className="mb-4" controlId="formLastName">
-                  <Form.Label>Last Name</Form.Label>
-                  <Form.Control type="text" placeholder="Last name" value={lName} onChange={(e) => setLName(e.target.value)} />
-                </Form.Group>
-
-                <Form.Group className="mb-4" controlId="formEmail">
-                  <Form.Label>Email Address</Form.Label>
-                  <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                </Form.Group>
-
-                <Form.Group className="mb-4" controlId="formPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                </Form.Group>
-
-                <Form.Group className="mb-4" controlId="formConfirmPassword">
-                  <Form.Label>Confirm Password</Form.Label>
-                  <Form.Control type="password" placeholder="Confirm password" value={confirmPwd} onChange={(e) => setConfirmPwd(e.target.value)} />
-                </Form.Group>
-
-                <Button variant="success" type="submit" className="w-100 my-3" disabled={missingInfo}>
-                  Create Account
-                </Button>
-
-                <a className="p-1 rounded" href="/login">Already have an account? Click here to log in</a>
-              </Form>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+    <>
+    <div className="row justify-content-center">
+      <div className="col-md-6">
+        <h3>Signup</h3>
+        {error && <div className="alert alert-danger">{error}</div>}
+        <form onSubmit={submit}>
+          <div className="mb-3">
+            <label>Name</label>
+            <input name="name" value={form.name} onChange={handleChange} className="form-control" />
+          </div>
+          <div className="mb-3">
+            <label>Email</label>
+            <input name="email" value={form.email} onChange={handleChange} className="form-control" />
+          </div>
+          <div className="mb-3">
+            <label>Password</label>
+            <input type="password" name="password" value={form.password} onChange={handleChange} className="form-control" />
+          </div>
+          <button className="btn btn-primary">Signup</button>
+          <Link className="btn btn-link" to="/login">Login</Link>
+        </form>
+      </div>
+    </div>
+    </>
   );
 };
 
