@@ -26,7 +26,16 @@ const InquirySchema = new mongoose.Schema({
         required: true,
         trim: true,
         maxLength: 500
-    }
+    },
+    date: { 
+    type: Date, 
+    required: true, 
+    default: Date.now 
+    },
+    createdAt: { 
+    type: Date, 
+    default: Date.now 
+}
 }, {timestamps: true});
 
 module.exports = mongoose.model('inquiry', InquirySchema)

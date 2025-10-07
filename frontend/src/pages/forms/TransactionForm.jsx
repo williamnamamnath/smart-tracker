@@ -18,7 +18,7 @@ const TransactionForm = ({ onAdd }) => {
     e.preventDefault();
     try {
       const payload = { ...form, amount: Number(form.amount) };
-      const res = await api.post('/transactions', payload);
+      const res = await api.post('/new-transaction', payload);
       onAdd(res.data);
       setForm({ type: 'expense', title: '', amount: '', category: '', date: new Date().toISOString().slice(0,10), description: '' });
       setError('');
@@ -29,32 +29,39 @@ const TransactionForm = ({ onAdd }) => {
 
   return (
     <>
-    <div className="card mb-3 p-3">
-      <h5>Add Transaction</h5>
+    <div className="card my-4 mx-3 p-3">
+      <h4 className='text-center mb-4'>Add Transaction</h4>
       {error && <div className="alert alert-danger">{error}</div>}
       <form onSubmit={submit}>
         <div className="row g-2">
+          <div className="col-6">
+            <input name="title" placeholder="Title" className="form-control" value={form.title} onChange={change} required />
+          </div>
+
           <div className="col-6">
             <select name="type" className="form-select" value={form.type} onChange={change}>
               <option value="expense">Expense</option>
               <option value="income">Income</option>
             </select>
           </div>
-          <div className="col-6">
-            <input name="title" placeholder="Title" className="form-control" value={form.title} onChange={change} required />
-          </div>
+
+
           <div className="col-4">
             <input name="amount" placeholder="Amount" className="form-control" value={form.amount} onChange={change} type="number" required />
           </div>
+
           <div className="col-4">
             <input name="category" placeholder="Category" className="form-control" value={form.category} onChange={change} />
           </div>
+
           <div className="col-4">
             <input name="date" type="date" className="form-control" value={form.date} onChange={change} />
           </div>
+
           <div className="col-12">
             <textarea name="description" placeholder="Description" className="form-control" value={form.description} onChange={change} />
           </div>
+
         </div>
         <button className="btn btn-primary mt-2">Add</button>
       </form>

@@ -4,7 +4,7 @@ const TransactionList = ({ transactions, onDelete, onUpdate, loading }) => {
   const remove = async id => {
     if (!window.confirm('Delete this transaction?')) return;
     try {
-      await api.delete(`/transactions/${id}`);
+      await api.delete(`/delete-transaction/${id}`);
       onDelete(id);
     } catch (err) {
       console.error(err);
@@ -16,8 +16,8 @@ const TransactionList = ({ transactions, onDelete, onUpdate, loading }) => {
 
   return (
     <>
-    <div className="card p-3">
-      <h5>Transactions</h5>
+    <div className="card my-4 mx-3 p-3">
+      <h4 className='text-center mb-4'>Transactions</h4>
       <ul className="list-group">
         {transactions.map(tx => (
           <li className="list-group-item d-flex justify-content-between align-items-start" key={tx._id}>

@@ -15,12 +15,12 @@ const DashboardChart = ({ transactions }) => {
 
   return (
     <>
-    <div className="card p-3">
-      <h5>Summary</h5>
-      <Doughnut data={data} />
-      <div className="mt-3">
+    <div className="card my-4 mx-3 p-3">
+      <h4 className='text-center mb-4'>Summary</h4>
+      <div className="my-2 text-center">
         <strong>Net:</strong> ${transactions.reduce((s, t) => s + (t.type === 'income' ? t.amount : -t.amount), 0)}
       </div>
+      <Doughnut data={data} />
     </div>
     </>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 
-//REMINDER: Add screenshots for each benefit when finalizing the project
+//REMINDER: Add screenshots for each benefit when finalizing the project (in a carousel format?)
 
 const LandingPage = () => {
   return (
@@ -10,15 +10,7 @@ const LandingPage = () => {
 
     <div className="d-grid gap-2 d-md-block">
   <button className="btn btn-success m-3 p-5 fs-4" type="button">
-        Already have an account? 
-        <br/>
-        <a href="/login" className='text-decoration-none text-reset fs-5'>Click here to login</a>
-  </button>
-
-  <button className="btn btn-warning m-3 p-5 fs-4" type="button">
-        Don't have an account yet?
-        <br/>
-        <a href="/signup" className='text-decoration-none text-reset fs-5'>Click here to get started</a>
+        <a href="/authenticate" className='text-decoration-none text-reset fs-5'>Click here to get started!</a>
   </button>
 </div>
 </div>
