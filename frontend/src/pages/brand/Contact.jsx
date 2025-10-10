@@ -2,42 +2,69 @@ import { useState } from "react";
 
 const Contact = () => {
 
-const [inputState, setInputState] = useState({
+const [errorMessage, setErrorMessage] = useState("");
+const [buttonText, setButtonText] = useState("Submit");
+
+const [form, setForm] = useState({
         firstName: '',
         lastName: '',
         email: '',
         description: ''
     });
 
-    const { firstName, lastName, email, description } = inputState;
 
-    const handleChange = name => e => {
-        setInputState({...inputState, [name]: e.target.value});
-        setError('');
-    }
+    const handleChange = (field) => (event) => {
+        setForm((prevForm) => ({
+            ...prevForm,
+            [field]: event.target.value,
+        }));
+    };
 
-  const handleSubmit = e => {
-        e.preventDefault();
 
-        setInputState({
-            firstName: '',
-            lastName: '',
-            email: '',
-            description: ''
-        })
-    }
+const handleSubmit = async (event) => {
+event.preventDefault();
+setButtonText("Please wait...");
+
+try {
+const response = await fetch("/inquiries", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+        firstName: form.firstName,
+        lastName: form.lastName,
+        email: form.email,
+        description: form.description
+    }),
+});
+
+if (response.ok) {
+setErrorMessage(null);
+alert("Your inquiry has been submitted successfully!");
+} else {
+    const error = await response.text();
+    const message = JSON.parse(error).message;
+    setButtonText("Failed to submit");
+    setErrorMessage(`Submission failed: ${message}`); 
+}
+} catch (error) {
+    setButtonText("Failed to submit");
+    setErrorMessage(`Submission failed: ${error.message}`);
+}
+};
 
     return (
         <>
         <div className="m-3 p-3">
             <h1 className="text-center">Contact Us</h1>
             <div className="p-3 my-3 text-center">
-            <p className="text-center my-3">Please read below to see how you can contact us, should you have any questions or inquiries.</p>
+            <h4 className="text-center my-3">Please read below to see how you can contact us, should you have any questions or inquiries.</h4>
 
-            <p className="fw-bold">Please choose <span className="text-decoration-underline">one</span> of the 3 methods below.</p>
+            <p className="fw-bold">Choose <span className="text-decoration-underline">one</span> of the 3 methods below.</p>
               
             <div className="d-flex justify-content-center gap-4 my-5">
-                <div className="border rounded p-4 flex-fill text-center">
+                <div className="p-4 flex-fill text-center" style={{ border: "2px solid #000", borderRadius: "8px", padding: "24px", boxShadow: "10px 10px lightblue" }}>
                     <h3 className="text-decoration-underline">Inquiry Form</h3>
 
                     <form onSubmit={handleSubmit} className="mt-3">
@@ -50,7 +77,7 @@ const [inputState, setInputState] = useState({
                         className="form-control"
                         id="fullName"
                         name="fullName"
-                        value={firstName}
+                        value={form.firstName}
                         onChange={handleChange('firstName')}
                         placeholder="Enter your first name"
                         required
@@ -66,7 +93,7 @@ const [inputState, setInputState] = useState({
                         className="form-control"
                         id="fullName"
                         name="fullName"
-                        value={lastName}
+                        value={form.lastName}
                         onChange={handleChange('lastName')}
                         placeholder="Enter your last name"
                         required
@@ -82,7 +109,7 @@ const [inputState, setInputState] = useState({
                         className="form-control"
                         id="email"
                         name="email"
-                        value={email}
+                        value={form.email}
                         onChange={handleChange('email')}
                         placeholder="Enter your email"
                         required
@@ -98,29 +125,29 @@ const [inputState, setInputState] = useState({
                         id="comments"
                         name="comments"
                         rows="4"
-                        value={description}
+                        value={form.description}
                         onChange={handleChange('description')}
                         placeholder="Write your comment(s) or question(s) here..."
                         required
                     ></textarea>
                     </div>
 
-                    <button type="submit" className="btn btn-primary" disabled={!formData.fullName || !formData.email || !formData.comments}>
-                    Submit
+                    <button type="submit" className="btn btn-primary" disabled={!form.firstName || !form.lastName || !form.email || !form.description}>
+                    {buttonText}
                     </button>
-                    {error && (
+                    {errorMessage && (
                             <div className="text-danger mt-3 text-center">
-                                {error}
+                                {errorMessage}
                             </div>
                         )}
                 </form>
                 </div>
 
-                <div className="border rounded p-4 flex-fill text-center">
+                <div className="p-4 flex-fill text-center" style={{ border: "2px solid #000", borderRadius: "8px", padding: "24px", boxShadow: "10px 10px lightblue" }}>
                     <h3 className="text-decoration-underline">Reach us by Email</h3>
                 </div>
 
-                <div className="border rounded p-4 flex-fill text-center">
+                <div className="p-4 flex-fill text-center" style={{ border: "2px solid #000", borderRadius: "8px", padding: "24px", boxShadow: "10px 10px lightblue" }}>
                     <h3 className="text-decoration-underline">DM us on X/Twitter</h3>
                 </div>
             </div>

@@ -12,7 +12,6 @@ const Signup = ({
     <div className="row justify-content-center">
       <div className="col-md-6">
         <h3 className='mb-5 text-center text-decoration-underline'>Signup</h3>
-        {error && <div className="alert alert-danger">{error}</div>}
         <form onSubmit={handleSignUp}>
 
           <div className="mb-4">
@@ -32,7 +31,7 @@ const Signup = ({
 
           <div className="mb-4">
             <label className='fw-bold'>Phone Number</label>
-            <input name="phone" type='tel' placeholder="E.g. 123-456-789" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" value={formData.phone} onChange={handleChangeForm} className="form-control" />
+            <input name="phone" type='tel' placeholder="E.g. 123-456-789" value={formData.phone} onChange={handleChangeForm} className="form-control" />
           </div>
 
           <div className="mb-4">

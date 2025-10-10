@@ -15,7 +15,7 @@ const DashboardChart = ({ transactions }) => {
 
   return (
     <>
-    <div className="card my-4 mx-3 p-3">
+    <div className="card my-4 mx-3 p-3" style={{ border: "2px solid #000", borderRadius: "8px", padding: "24px", boxShadow: "10px 10px orange" }}>
       <h4 className='text-center mb-4'>Summary</h4>
       <div className="my-2 text-center">
         <strong>Net:</strong> ${transactions.reduce((s, t) => s + (t.type === 'income' ? t.amount : -t.amount), 0)}

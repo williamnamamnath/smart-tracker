@@ -1,9 +1,6 @@
-import { useState } from "react";
-import "./../node_modules/bootstrap/dist/css/bootstrap.min.css";
-
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import LoginSignUp from "./pages/authentication";
+import LoginSignUp from "./pages/authentication/index.jsx";
 import About from './pages/brand/About';
 import FAQ from './pages/brand/FAQ';
 import TOS from './pages/brand/TOS';
@@ -13,10 +10,9 @@ import LandingPage from './pages/dashboard/LandingPage';
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
+import "./../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
-
-  const [user, setUser] = useState(null);
 
   return (
     <>

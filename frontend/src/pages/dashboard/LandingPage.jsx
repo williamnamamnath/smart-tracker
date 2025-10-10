@@ -9,8 +9,8 @@ const LandingPage = () => {
     <div className="mt-5 py-3 container text-center">
 
     <div className="d-grid gap-2 d-md-block">
-  <button className="btn btn-success m-3 p-5 fs-4" type="button">
-        <a href="/authenticate" className='text-decoration-none text-reset fs-5'>Click here to get started!</a>
+  <button className="btn btn-success m-3 p-5 fs-4" type="button" style={{ border: "2px solid #000", borderRadius: "8px", padding: "24px", boxShadow: "10px 10px lightgray" }}>
+        <a href="/authenticate" className='text-decoration-none text-reset fs-5'>Click here to login or create an account</a>
   </button>
 </div>
 </div>

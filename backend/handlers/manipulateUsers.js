@@ -4,10 +4,9 @@ const UserSchema = require("../models/UserModel");
 
 //Adding new user
 const newUser = async (req, res) => {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, phone, address, city, postcode, country, email, password } = req.body;
 
-    
-    if (!firstName || !lastName || !email || !password) {
+    if (!firstName || !lastName || !phone || !address || !city || !postcode || !country || !email || !password) {
         return res.status(400).json({ message: 'All fields are required!' })
     }
     
@@ -23,6 +22,11 @@ const newUser = async (req, res) => {
             firstName,
             lastName,
             email,
+            phone,
+            address,
+            city,
+            postcode,
+            country,
             password: hashedPassword
         })
 
@@ -34,7 +38,7 @@ const newUser = async (req, res) => {
         res.status(201).json({ 
             message: 'User created successfully', 
             token,
-            id: { id: user.id, name: user.firstName, email: user.email } 
+            user: user 
         });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message })

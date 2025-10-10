@@ -65,11 +65,10 @@ const LoginSignUp = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    phone: "",
     email: "",
+    phone: "",
     address: "",
     city: "",
-    province: "",
     postcode: "",
     country: "",
     password: ""
@@ -90,7 +89,7 @@ const LoginSignUp = () => {
   const handleSignUp = async (event) => {
 
     event.preventDefault();
-    setBtnTextSignup("Creating your account!");
+    setBtnTextSignup("Creating your account...");
 
     try {
       const {
@@ -100,13 +99,12 @@ const LoginSignUp = () => {
         email,
         address,
         city,
-        province,
         postcode,
         country,
         password
       } = formData;
 
-      const response = await fetch("/signUp", {
+      const response = await fetch("/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -114,11 +112,10 @@ const LoginSignUp = () => {
         body: JSON.stringify({
           firstName,
           lastName,
-          phone,
           email,
+          phone,
           address,
           city,
-          province,
           postcode,
           country,
           password
@@ -126,11 +123,14 @@ const LoginSignUp = () => {
       });
 
       if (response.ok) {
-        const userData = await response.json();
+        const text = await response.json();
+        const userData = text ? JSON.parse(text) : {};
         await logIn(userData);
 
         setSignUpMessage("Your account has been created, you can now login");
         setBtnTextSignup("Done!");
+        alert("Account created successfully! Login to start tracking your expenses.");
+        navigate("/authenticate");
 
         setFormData({
           firstName: "",
@@ -151,7 +151,7 @@ const LoginSignUp = () => {
         setBtnTextSignup("Sign up failed!");
       }
     } catch (error) {
-      setSignUpMessage("An error occurred, please try again.");
+      setSignUpMessage(`An error occurred: ${error.message}`);
     }
   };
 

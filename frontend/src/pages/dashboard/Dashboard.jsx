@@ -31,6 +31,7 @@ const Dashboard = () => {
         <div className="col-md-6">
           <DashboardChart transactions={transactions} />
         </div>
+        
         <div className="col-md-6">
           <TransactionForm onAdd={addTx} />
           <TransactionList transactions={transactions} onDelete={deleteTx} onUpdate={updateTx} loading={loading} />
